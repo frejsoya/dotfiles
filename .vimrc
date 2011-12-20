@@ -18,7 +18,7 @@ fun SetupVAM()
     exec 'helptags '.fnameescape(vam_install_path.'/vim-addon-manager/doc')
   endif
 
-  call vam#ActivateAddons(["pyflakes2441","bufexplorer.zip","taglist","Color_Sampler_Pack","reload","supertab","The_NERD_tree","The_NERD_Commenter","surround","matchit.zip","AutoAlign","LanguageTool","L9","FuzzyFinder","vcscommand","fugitive","SpellChecker","LaTeX_Box","TeX-PDF","snipmate","github:honza/snipmate-snippets","Solarized","virtualenv","preview3344"], {'auto_install': 0 })
+  call vam#ActivateAddons(["pyflakes2441","bufexplorer.zip","taglist","Color_Sampler_Pack","reload","supertab","The_NERD_tree","The_NERD_Commenter","surround","matchit.zip","AutoAlign","LanguageTool","L9","FuzzyFinder","vcscommand","fugitive","SpellChecker","LaTeX_Box","TeX-PDF","snipmate","github:honza/snipmate-snippets","Solarized","virtualenv","preview3344","clang","clang_complete"], {'auto_install': 0 })
   " sample: call vam#ActivateAddons(['pluginA','pluginB', ...], {'auto_install' : 0})
   " where 'pluginA' could be "git://" "github:YourName" or "snipmate-snippets" see vam#install#RewriteName()
   " also see section "5. Installing plugins" in VAM's documentation
@@ -35,13 +35,14 @@ call SetupVAM()
 
 
 let NERDTreeIgnore=['\.uo','\.ui']
-colorscheme darkblue
 set visualbell
 
 set nocompatible
 filetype on
 filetype plugin on
-syntax on
+syntax enable
+set background=dark
+colorscheme solarized 
 
 let mapleader = ","
 
@@ -73,6 +74,8 @@ set softtabstop=2
 set nu
 set smartindent
 set smarttab
+
+
 
 set ruler
 "Save undofile!
@@ -136,11 +139,10 @@ augroup END
 command! Untab :%s/\t/  /g
 
 
-
 augroup csrc
   au!
   autocmd FileType * set nocindent 
-  autocmd FIletype c,cpp set cindent
+  autocmd Filetype c,cpp set cindent
 augroup END
 
 set encoding=utf-8
