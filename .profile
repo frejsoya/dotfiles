@@ -77,8 +77,6 @@ alias ls="ls --color=auto"
 export CLICOLOR=1
 #PROMPT_COMMAND=$PROMPT_COMMAND';history -a;history -n'
 
-***REMOVED***
-
 shopt -s globstar autocd
 #
 complete -C aws_completer aws
