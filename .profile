@@ -3,10 +3,14 @@
 
 complete -F _known_hosts mosh
 
-export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+#export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 
 GIT_PROMPT_ONLY_IN_REPO=1
-source /usr/local/opt/bash-git-prompt/share/gitprompt.sh
+
+if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
+  GIT_PROMPT_THEME=Solarized
+  source "$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
+fi
 
 #source ~/Projects/bash-git-prompt/gitprompt.sh
 
@@ -37,6 +41,9 @@ export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 export PATH=/usr/local/share/npm/bin:/users/frej/mosml/bin:/usr/local/bin:/usr/local/sbin:/usr/local/Cellar/ruby/1.9.3-p194/bin:/opt/local/bin:/opt/local/sbin:/usr/texbin/:$PATH
 export MANPATH=/opt/local/share/man:$MANPATH
 
+#Ensure gnuutils version because of issuu work. (Will break all kinds of standard osx stuff..)
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 # For gobject-introspection to find our homebrew-installed ".typelib" files:
 export GI_TYPELIB_PATH=/usr/local/lib/girepository-1.0
 
@@ -44,14 +51,6 @@ export GI_TYPELIB_PATH=/usr/local/lib/girepository-1.0
 export WORKON_HOME=$HOME/Envs
 export PROJECT_HOME=$HOME/Projects
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--distribute --no-site-packages'
-
-#source /usr/local/share/python/virtualenvwrapper.sh
-#pyenv
-#if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
-
-#docker stuff
-#$(boot2docker shellinit)
 
 export EDITOR=mvim
 
@@ -72,6 +71,9 @@ export LANG=da_DK.UTF-8
 ##append instead of rewrite 
 shopt -s histappend
 
+###Various aliases
+alias build="/usr/bin/make -j 8"
+alias ls="ls --color=auto"
 export CLICOLOR=1
 #PROMPT_COMMAND=$PROMPT_COMMAND';history -a;history -n'
 
@@ -82,4 +84,28 @@ shopt -s globstar autocd
 complete -C aws_completer aws
 
 # OPAM configuration
+eval `opam config env`
 . /Users/frej/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/frej/.docker/machine/machines/default"
+export DOCKER_MACHINE_NAME="default"
+
+#anoying issuu stuff
+export AGGREGATOR_CONF_SHADOW=
+
+#
+export PATH=$HOME/.local/bin:$PATH
+
+test -e ${HOME}/.iterm2_shell_integration.bash && source ${HOME}/.iterm2_shell_integration.bash
+
+#To use Homebrew's directories rather than ~/.pyenv:
+export PYENV_ROOT=/usr/local/var/pyenv
+#pyenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+#pyenv virtualenv
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+
+complete -C aws_completer aws
